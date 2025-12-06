@@ -33,7 +33,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PageData data = pageDataList.get(position);
         holder.pageTitle.setText(data.pageTitle);
-        
+
         if (data.pageSubtitle != null && !data.pageSubtitle.isEmpty()) {
             holder.pageSubtitle.setText(data.pageSubtitle);
             holder.pageSubtitle.setVisibility(View.VISIBLE);
@@ -44,13 +44,34 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         holder.itemTitle.setText(data.itemTitle);
         holder.itemDescription.setText(data.itemDescription);
         holder.itemIcon.setImageResource(data.iconResId);
-        
+
+        // Set bookmark icon based on state
+        updateBookmarkIcon(holder.itemBookmark, data.isBookmarked);
+
+        // Bookmark click handler
+        holder.itemBookmark.setOnClickListener(v -> {
+            data.isBookmarked = !data.isBookmarked;
+            updateBookmarkIcon(holder.itemBookmark, data.isBookmarked);
+
+            if (data.bookmarkClickListener != null) {
+                data.bookmarkClickListener.onBookmarkClick(data.eventId, data.isBookmarked);
+            }
+        });
+
         // Handle click if needed (e.g., open detail)
         holder.itemCard.setOnClickListener(v -> {
             if (data.onClickListener != null) {
                 data.onClickListener.onClick(v);
             }
         });
+    }
+
+    private void updateBookmarkIcon(ImageView imageView, boolean isBookmarked) {
+        if (isBookmarked) {
+            imageView.setImageResource(R.drawable.ic_bookmark);
+        } else {
+            imageView.setImageResource(R.drawable.ic_bookmark_outline);
+        }
     }
 
     @Override
@@ -60,7 +81,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView pageTitle, pageSubtitle, itemTitle, itemDescription;
-        ImageView itemIcon;
+        ImageView itemIcon, itemBookmark;
         View itemCard;
 
         public ViewHolder(@NonNull View itemView) {
@@ -70,8 +91,13 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
             itemTitle = itemView.findViewById(R.id.itemTitle);
             itemDescription = itemView.findViewById(R.id.itemDescription);
             itemIcon = itemView.findViewById(R.id.itemIcon);
+            itemBookmark = itemView.findViewById(R.id.itemBookmark);
             itemCard = itemView.findViewById(R.id.itemCard);
         }
+    }
+
+    public interface BookmarkClickListener {
+        void onBookmarkClick(int eventId, boolean isBookmarked);
     }
 
     public static class PageData {
@@ -81,14 +107,38 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         String itemDescription;
         int iconResId;
         View.OnClickListener onClickListener;
+        int eventId;
+        double lat;
+        double lng;
+        boolean isBookmarked;
+        BookmarkClickListener bookmarkClickListener;
 
-        public PageData(String pageTitle, String pageSubtitle, String itemTitle, String itemDescription, int iconResId, View.OnClickListener onClickListener) {
+        public PageData(String pageTitle, String pageSubtitle, String itemTitle, String itemDescription,
+                int iconResId, View.OnClickListener onClickListener) {
             this.pageTitle = pageTitle;
             this.pageSubtitle = pageSubtitle;
             this.itemTitle = itemTitle;
             this.itemDescription = itemDescription;
             this.iconResId = iconResId;
             this.onClickListener = onClickListener;
+            this.isBookmarked = false;
+        }
+
+        public PageData setEventInfo(int eventId, double lat, double lng) {
+            this.eventId = eventId;
+            this.lat = lat;
+            this.lng = lng;
+            return this;
+        }
+
+        public PageData setBookmarked(boolean bookmarked) {
+            this.isBookmarked = bookmarked;
+            return this;
+        }
+
+        public PageData setBookmarkClickListener(BookmarkClickListener listener) {
+            this.bookmarkClickListener = listener;
+            return this;
         }
     }
 }

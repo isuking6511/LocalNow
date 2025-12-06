@@ -70,8 +70,13 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Kakao Map SDK - Temporarily disabled due to native library issues
-    // implementation("com.kakao.maps.open:android:2.11.9")
+    implementation("com.kakao.maps.open:android:2.11.9")
 
     // Google Sign In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Calendar View - using standard Android CalendarView (no external dependency needed)
+
+    // WorkManager
+    implementation("androidx.work:work-runtime:2.8.1")
 }

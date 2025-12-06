@@ -96,9 +96,10 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/itemBookmark"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_bookmark"
+                android:src="@drawable/ic_bookmark_outline"
                 app:tint="#000000" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

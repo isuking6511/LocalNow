@@ -78,7 +78,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             long dayDiff = diff / (24 * 60 * 60 * 1000);
 
             if (dayDiff < 0)
-                return "End";
+                return "Ended";
             if (dayDiff == 0)
                 return "D-Day";
             return "D-" + dayDiff;

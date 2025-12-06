@@ -8,25 +8,14 @@
 
 
     <!-- Map Placeholder - Kakao Map temporarily disabled -->
-    <RelativeLayout
+    <com.kakao.vectormap.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E8F5E9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Map View Placeholder\n(Kakao Map SDK 설정 중)"
-            android:textAlignment="center"
-            android:textColor="#666666"
-            android:textSize="16sp" />
-    </RelativeLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Title -->
     <TextView
@@ -36,7 +25,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/abel_regular"
-        android:text="Event Map"
+        android:text="LocalNow"
         android:textColor="#000000"
         android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,41 +75,7 @@
             app:tint="#555555" />
     </LinearLayout>
 
-    <!-- Markers (Simulated positions) -->
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_marker_yellow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_marker_yellow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        app:tint="#FF8A80" />
-
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_marker_yellow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        app:tint="#B9F6CA" />
+    <!-- Dynamic markers are added to Kakao Map via code -->
 
     <!-- Bottom Sheet Card -->
     <androidx.cardview.widget.CardView
